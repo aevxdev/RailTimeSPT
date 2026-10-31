@@ -4,7 +4,7 @@
 Client-side BepInEx plugin for SPT 4.1.6. Displays the armored train arrival and departure countdown in the extraction list, with an optional screen overlay.
 
 - **Plugin GUID:** `com.blackwell.railtime`
-- **Plugin name:** `RailTime`
+- **Plugin name:** `blackwell-RailTime`
 - **Version:** `1.0.0`
 - **Assembly:** `RailTime.dll`
 - **Namespace:** `Blackwell.RailTime`
