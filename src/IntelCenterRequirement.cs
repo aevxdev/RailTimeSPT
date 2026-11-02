@@ -8,11 +8,12 @@ namespace Blackwell.RailTime;
 
 internal static class IntelCenterRequirement
 {
+    private const int IntelCenterAreaType = 11;
+
     public static bool ShouldDisplayTimer()
     {
         int requiredLevel = Plugin.RequiredIntelCenterLevel.Value;
 
-        // Требование отключено.
         if (requiredLevel <= 0)
             return true;
 
@@ -22,7 +23,6 @@ internal static class IntelCenterRequirement
 
         var player = world?.MainPlayer;
 
-        // Не блокируем таймер, если игрок ещё не загружен.
         if (player == null)
             return true;
 
@@ -33,7 +33,7 @@ internal static class IntelCenterRequirement
 
         var side = ReadMember(profile, "Side")?.ToString();
 
-        // Дикий всегда видит таймер.
+        // За Дикого требование отключено
         if (string.Equals(
             side,
             "Savage",
@@ -50,6 +50,10 @@ internal static class IntelCenterRequirement
     private static int GetIntelCenterLevel(object profile)
     {
         var hideout = ReadMember(profile, "Hideout");
+
+        if (hideout == null)
+            return 0;
+
         var areas = ReadMember(hideout, "Areas") as IEnumerable;
 
         if (areas == null)
@@ -60,32 +64,34 @@ internal static class IntelCenterRequirement
             if (area == null)
                 continue;
 
-            var type = ReadMember(area, "Type")?.ToString();
+            var type = ReadMember(area, "Type");
 
-            if (!string.Equals(
-                type,
-                "IntelligenceCenter",
-                StringComparison.OrdinalIgnoreCase))
+            if (type == null)
+                continue;
+
+            int areaType;
+
+            try
+            {
+                areaType = Convert.ToInt32(type);
+            }
+            catch
             {
                 continue;
             }
+
+            if (areaType != IntelCenterAreaType)
+                continue;
 
             var level = ReadMember(area, "Level");
 
-            if (level == null)
-                continue;
-
-            if (int.TryParse(level.ToString(), out int result))
-                return result;
-
-            // На случай, если Level представлен вложенным объектом.
-            var nestedLevel = ReadMember(level, "Level");
-
-            if (nestedLevel != null &&
-                int.TryParse(nestedLevel.ToString(), out result))
+            if (level != null &&
+                int.TryParse(level.ToString(), out int result))
             {
                 return result;
             }
+
+            return 0;
         }
 
         return 0;
