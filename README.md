@@ -5,7 +5,7 @@ Client-side BepInEx plugin for SPT 4.1.6. Displays the armored train arrival and
 
 - **Plugin GUID:** `com.blackwell.railtime`
 - **Plugin name:** `blackwell-RailTime`
-- **Version:** `1.0.0`
+- **Version:** `1.0.1`
 - **Assembly:** `RailTime.dll`
 - **Namespace:** `Blackwell.RailTime`
 - **Author:** `blackwell`
