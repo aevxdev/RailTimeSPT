@@ -1,6 +1,7 @@
 # Build output
 bin/
 obj/
+release/
 
 # Visual Studio
 .vs/
@@ -18,3 +19,6 @@ obj/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Git
+.git/
