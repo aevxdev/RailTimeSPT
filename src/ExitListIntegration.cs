@@ -44,13 +44,24 @@ internal static class ExitListIntegration
 
     private static void AfterTimerVisibilityUpdate(ExitTimerPanel __instance)
     {
-        if (FindTrain(__instance) != null)
-            __instance.TimerText.gameObject.SetActive(true);
+        if (FindTrain(__instance) == null)
+            return;
+
+        if (!IntelCenterRequirement.ShouldDisplayTimer())
+        {
+            __instance.TimerText.gameObject.SetActive(false);
+            return;
+        }
+
+        __instance.TimerText.gameObject.SetActive(true);
     }
 
     private static void AfterVisitedUpdate(ExitTimerPanel __instance)
     {
         if (FindTrain(__instance) == null)
+            return;
+
+        if (!IntelCenterRequirement.ShouldDisplayTimer())
             return;
 
         __instance._itemsObject?.SetActive(false);
@@ -64,6 +75,11 @@ internal static class ExitListIntegration
             var train = FindTrain(__instance);
             if (train == null)
                 return;
+            if (!IntelCenterRequirement.ShouldDisplayTimer())
+            {
+                __instance.TimerText.gameObject.SetActive(false);
+                return;
+            }
 
             var status = TrainSchedule.Read(train);
             if (status.Stage == TrainStage.Unavailable)

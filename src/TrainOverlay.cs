@@ -40,7 +40,15 @@ internal sealed class TrainOverlay : MonoBehaviour
             _train = FindObjectOfType<Locomotive>();
         }
 
-        _text = _train == null ? string.Empty : TrainSchedule.OverlayText(TrainSchedule.Read(_train));
+        if (!IntelCenterRequirement.ShouldDisplayTimer())
+        {
+            _text = string.Empty;
+            return;
+        }
+
+        _text = _train == null
+            ? string.Empty
+            : TrainSchedule.OverlayText(TrainSchedule.Read(_train));
     }
 
     private void OnGUI()
