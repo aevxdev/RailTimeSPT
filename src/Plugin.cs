@@ -16,6 +16,7 @@ public sealed class Plugin : BaseUnityPlugin
     internal static ConfigEntry<string> Language = null!;
     internal static ConfigEntry<bool> ShowInExitList = null!;
     internal static ConfigEntry<bool> ShowOverlay = null!;
+    internal static ConfigEntry<int> RequiredIntelCenterLevel = null!;
     internal static ConfigEntry<string> OverlayPosition = null!;
     internal static ConfigEntry<int> OverlayFontSize = null!;
     internal static ConfigEntry<KeyboardShortcut> OverlayToggle = null!;
@@ -30,6 +31,7 @@ public sealed class Plugin : BaseUnityPlugin
         Language = Config.Bind("General", "Language", "Russian", new ConfigDescription("Language", new AcceptableValueList<string>("Russian", "English")));
         ShowInExitList = Config.Bind("ExitList", "ShowTimer", true, "Show train timer in extraction list");
         ShowOverlay = Config.Bind("Overlay", "Enabled", false, "Show on-screen overlay");
+        RequiredIntelCenterLevel = Config.Bind("Requirements", "RequiredIntelCenterLevel", 0, new ConfigDescription("Minimum Intel Center level required for PMC (0 = disabled).", new AcceptableValueRange<int>(0, 3)));
         OverlayPosition = Config.Bind("Overlay", "Position", "TopLeft", new ConfigDescription("Overlay position", new AcceptableValueList<string>("TopLeft", "TopRight", "BottomLeft", "BottomRight")));
         OverlayFontSize = Config.Bind("Overlay", "FontSize", 18, new ConfigDescription("Font size", new AcceptableValueRange<int>(10, 40)));
         OverlayToggle = Config.Bind("Overlay", "ToggleKey", new KeyboardShortcut(KeyCode.None), "Toggle overlay visibility");
